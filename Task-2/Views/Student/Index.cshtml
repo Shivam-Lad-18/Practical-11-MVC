@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Student Management";
+}
+
+<h2>Student Management</h2>
+<button onclick="loadCreateForm()">Add New Student</button>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="studentTableBody">
+        <!-- Student list will be loaded here using AJAX -->
+    </tbody>
+</table>
+
+<!-- Partial View Container (Modal or Div for dynamic loading) -->
+<div id="modalContainer"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        loadStudentList();
+    });
+
+    function loadStudentList() {
+        $.get('/Student/List', function (data) {
+            $('#studentTableBody').html(data);
+        });
+    }
+
+    function loadCreateForm() {
+        $.get('/Student/Create', function (data) {
+            $('#modalContainer').html(data);
+        });
+    }
+
+    function loadEditForm(id) {
+        $.get('/Student/Edit/' + id, function (data) {
+            $('#modalContainer').html(data);
+        });
+    }
+
+    function loadDeleteForm(id) {
+        $.get('/Student/Delete/' + id, function (data) {
+            $('#modalContainer').html(data);
+        });
+    }
+
+    function loadDetails(id) {
+        $.get('/Student/Details/' + id, function (data) {
+            $('#modalContainer').html(data);
+        });
+    }
+</script>

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Task_2.Models.Student>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Name</td>
+        <td>@item.DateOfBirth.ToShortDateString()</td>
+        <td>@item.Address</td>
+        <td>@item.Phone</td>
+        <td>@item.Email</td>
+        <td>
+            <button onclick="loadEditForm('@item.Id')">Edit</button>
+            <button onclick="loadDetails('@item.Id')">Details</button>
+            <button onclick="loadDeleteForm('@item.Id')">Delete</button>
+        </td>
+    </tr>
+}
