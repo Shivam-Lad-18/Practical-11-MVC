@@ -1,29 +1,30 @@
 ﻿@model Task_2.Models.Student
 
-<div>
-    <h4>Student Details</h4>
+<div class="container">
+    <h4 class="text-primary">Student Details</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>@Html.DisplayNameFor(model => model.Name)</dt>
-        <dd>@Html.DisplayFor(model => model.Name)</dd>
+    <dl class="row">
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
-        <dd>@Html.DisplayFor(model => model.DateOfBirth)</dd>
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.DateOfBirth)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.Address)</dt>
-        <dd>@Html.DisplayFor(model => model.Address)</dd>
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.Phone)</dt>
-        <dd>@Html.DisplayFor(model => model.Phone)</dd>
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Phone)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.Email)</dt>
-        <dd>@Html.DisplayFor(model => model.Email)</dd>
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
     </dl>
 </div>
 
-<div>
-    <button type="button" class="btn btn-primary" id="editStudent" data-id="@Model.Id">Edit</button>
-    <button type="button" class="btn btn-secondary" onclick="$('#modalContainer').html('');">Close</button>
+<div class="text-right">
+    <button type="button" class="btn btn-warning" id="editStudent" data-id="@Model.Id">
+        <i class="fas fa-edit"></i> Edit
+    </button>
 </div>
 
 <script>
@@ -35,7 +36,8 @@
                 url: '/Student/Edit/' + studentId,
                 type: 'GET',
                 success: function (data) {
-                    $('#modalContainer').html(data); // Load Edit form in modal
+                    $('#modalContainer .modal-body').html(data); // Load form inside modal-body
+                    $('#modalContainer').modal('show');
                 },
                 error: function () {
                     alert("An error occurred while loading the edit form.");

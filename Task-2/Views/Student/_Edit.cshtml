@@ -1,13 +1,13 @@
 ﻿@model Task_2.Models.Student
 
 <div class="form-horizontal">
-    <h4>Edit Student</h4>
+    <h4 class="text-primary">Edit Student</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -15,15 +15,15 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.DateOfBirth, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+            <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" />
             @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
@@ -31,7 +31,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
@@ -39,18 +39,15 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="button" class="btn btn-primary" id="saveEdit">Save</button>
-            <button type="button" class="btn btn-secondary" onclick="$('#modalContainer').html('');">Cancel</button>
-        </div>
+    <div class="form-group text-right">
+        <button type="button" class="btn btn-success" id="saveEdit"><i class="fas fa-save"></i> Save</button>
     </div>
 </div>
 
@@ -58,12 +55,12 @@
     $(document).ready(function () {
         $('#saveEdit').click(function () {
             var formData = {
-                Id: $('#Id').val(),
-                Name: $('#Name').val(),
-                DateOfBirth: $('#DateOfBirth').val(),
-                Address: $('#Address').val(),
-                Phone: $('#Phone').val(),
-                Email: $('#Email').val()
+                Id: $('input[name="Id"]').val(),
+                Name: $('input[name="Name"]').val(),
+                DateOfBirth: $('input[name="DateOfBirth"]').val(),
+                Address: $('input[name="Address"]').val(),
+                Phone: $('input[name="Phone"]').val(),
+                Email: $('input[name="Email"]').val()
             };
 
             $.ajax({
@@ -71,8 +68,9 @@
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    $('#studentTableBody').html(data);
-                    $('#modalContainer').html(''); // Close the modal
+                    $('#studentTableBody').html(data);  // Refresh student list
+                    $('#modalContainer').modal('hide'); // Properly close the modal
+                    $('.modal-backdrop').remove();
                 },
                 error: function () {
                     alert("An error occurred while updating the student.");

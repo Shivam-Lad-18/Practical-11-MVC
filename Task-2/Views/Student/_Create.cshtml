@@ -1,55 +1,51 @@
 ﻿@model Task_2.Models.Student
 
-<div class="form-horizontal">
-    <h4>Create Student</h4>
+<div class="container">
+    <h4 class="text-primary">Create Student</h4>
     <hr />
+    <div class="alert alert-info">
+        <strong>ℹ️ Note:</strong> Please fill in all required fields before submitting.
+    </div>
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Name, new { @class = "form-label" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter full name" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
-        </div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.DateOfBirth, new { @class = "form-label" })
+        @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-        </div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Address, new { @class = "form-label" })
+        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter address" } })
+        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-        </div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Phone, new { @class = "form-label" })
+        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter phone number" } })
+        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter email address" } })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="button" class="btn btn-primary" id="saveCreate">Create</button>
-            <button type="button" class="btn btn-secondary" onclick="$('#modalContainer').html('');">Cancel</button>
-        </div>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary me-2" id="saveCreate">
+            <i class="fas fa-plus-circle"></i> Create
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="$('#modalContainer').html('');">
+            <i class="fas fa-times"></i> Cancel
+        </button>
     </div>
 </div>
 
@@ -69,11 +65,14 @@
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    $('#studentTableBody').html(data); // Refresh student list
-                    $('#modalContainer').html(''); // Close the modal
+                    alert("Student created successfully!");
+                    $('#studentTableBody').html(data);  // Refresh student list
+                    $('#modalContainer').modal('hide'); // Properly close the modal
+                    $('.modal-backdrop').remove();
                 },
-                error: function () {
-                    alert("An error occurred while creating the student.");
+                error: function (xhr, status, error) {
+                    alert("Error: Unable to create student. Please check the form and try again.");
+                    console.error("Error Details:", status, error);
                 }
             });
         });

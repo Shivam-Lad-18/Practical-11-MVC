@@ -8,10 +8,10 @@
         <td>@item.Address</td>
         <td>@item.Phone</td>
         <td>@item.Email</td>
-        <td>
-            <button onclick="loadEditForm('@item.Id')">Edit</button>
-            <button onclick="loadDetails('@item.Id')">Details</button>
-            <button onclick="loadDeleteForm('@item.Id')">Delete</button>
+        <td class="text-center">
+            <button class="btn btn-sm btn-warning" onclick="loadEditForm('@item.Id')">Edit</button>
+            <button class="btn btn-sm btn-info text-white" onclick="loadDetails('@item.Id')">Details</button>
+            <button class="btn btn-sm btn-danger" onclick="loadDeleteForm('@item.Id')">Delete</button>
         </td>
     </tr>
 }
